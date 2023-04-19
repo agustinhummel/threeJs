@@ -1,13 +1,13 @@
 import * as THREE from './threejs/three.module.js';
 import {STLLoader} from './threejs/STLLoader.js';
 import { OrbitControls } from './threejs/OrbitControls.js';
-
+import {ThreeMFLoader} from './threejs/3MFLoader.js';
 
 let scene, camera, renderer, object;
 
 function init(){
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x2a003b);
+    scene.background = new THREE.Color(0x2a053b);
 
     camera = new THREE.PerspectiveCamera(
         75,
@@ -15,13 +15,20 @@ function init(){
         0.1,
         10000
     );
-    camera.position.z = 10;
+    camera.position.z = 200;
 
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    scene.add(object);
+    //scene.add(object);
+
+    let loader2 = new ThreeMFLoader();
+    loader2.load('/3dModels/Camion.3mf'), (object2)=>{
+        object2.position.set(0,0,0);
+        object2.rotation.x = -Math.PI/2
+        scene.add(object2);
+    }
 
     let control = new OrbitControls(camera, renderer.domElement);
 
